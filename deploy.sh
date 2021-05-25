@@ -1,13 +1,17 @@
 #!/bin/bash
 
 # Requires minimal installation and working network.
-# If no username given, will prompt when performing chsh.
+# To retrieve this file, it's best to clone:
+#      git@github.com:PierrotAWB/deploy.git
+# (so it is assumed that git is already installed on the machine).
+
+# If no username given, script will prompt when performing chsh.
 
 username=$1
 
 
 ##### Dependencies
-sudo pacman -Syu git zsh
+sudo pacman -Syu zsh
 
 
 ##### Shell

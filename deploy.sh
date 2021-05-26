@@ -8,7 +8,7 @@
 set -x
 
 ##### Dependencies
-sudo pacman -Syu zsh
+sudo pacman -Syu zsh xorg-server xorg-xinit xorg-xset
 
 
 ##### Shell
@@ -20,7 +20,9 @@ cd /tmp
 [ -d dotfiles ] && rm -rf dotfiles
 git clone https://github.com/PierrotAWB/dotfiles.git 
 [ -d ~/.config ] && rm -rf ~/.config
-mv dotfiles ~/.config
+mv dotfiles/.config ~/.config
+mv dotfiles/.xinitrc ~/.xinitrc
+mv dotfiles/.zshenv ~/.zshenv
 cd
 
 

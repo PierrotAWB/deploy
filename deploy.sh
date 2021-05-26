@@ -16,6 +16,7 @@ sudo pacman -Syu zsh
 
 ##### Shell
 if [ -z "$username" ]; then
+	echo "No user name given. Please enter one:"
 	read username
 fi
 sudo chsh -s $(which zsh) $username

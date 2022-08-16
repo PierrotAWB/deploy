@@ -31,35 +31,38 @@ sudo pacman -Syu \
     `# workflow  ` dmenu \
     `# x         ` xorg-server xorg-xinit xorg-xset xorg-xrandr xf86-input-libinput xf86-video-intel
 
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
 # Configuration
-cd /tmp
+cd /tmp || exit
 rm -rf dotfiles config
 git clone https://github.com/PierrotAWB/dotfiles.git
-for dir in ".config" ".xinitrc" ".zshenv" do
-	mv "dotfiles/$dir" "~/$dir"
+for dir in ".config" ".xinitrc" ".zshenv"
+do
+	mv "dotfiles/$dir" "$HOME/$dir"
 done
 
 # Scripts
-mkdir -p ~/.local && cd ~/.local
+mkdir -p ~/.local && cd ~/.local || exit
 rm -rf scripts bin
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 
 # AUR
-for program in "brave" "lf" do
-	cd /tmp
+for program in "brave" "lf"
+do
+	cd /tmp || exit
 	git clone "https://aur.archlinux.org/$program.git"
-	cd "$program"
+	cd "$program" || exit
 	makepkg -si
 done
 
 # Suckless
-for program in "st" "dwm" "dwmblocks" do
-	cd ~/.config
+for program in "st" "dwm" "dwmblocks"
+do
+	cd ~/.config || exit
 	git clone "https://github.com/PierrotAWB/$program.git"
-	cd "$program"
+	cd "$program" || exit
 	sudo make install
 done
 
@@ -69,7 +72,7 @@ systemctl enable cronie.service
 
 # Fonts
 sudo touch /etc/fonts/local.conf
-sudo echo "<?xml version=\"1.0\"?>
+echo "<?xml version=\"1.0\"?>
 <!DOCTYPE fontconfig SYSTEM \"urn:fontconfig:fonts.dtd\">
 <fontconfig>
 	<alias>
@@ -82,4 +85,4 @@ sudo echo "<?xml version=\"1.0\"?>
 			<family>Inter</family>
 		</prefer>
 	</alias>
-</fontconfig>" > /etc/fonts/local.conf
+</fontconfig>" | sudo tee /etc/fonts/local.conf

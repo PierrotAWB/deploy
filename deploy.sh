@@ -22,12 +22,12 @@ sudo pacman -Syu \
     `# archive   ` p7zip zip unzip unrar \
     `# audio     ` ncmpcpp mpd pulseaudio pulseaudio-alsa pavucontrol alsa-plugins alsa-utils \
     `# bluetooth ` bluez bluez-utils pulseaudio-bluetooth \
-    `# code      ` nvim python python-pip go rust \
+    `# code      ` neovim python python-pip go rust \
     `# desktop   ` slock \
     `# fonts     ` adobe-source-code-pro-fonts noto-fonts ttf-fira-code ttf-joypixels \
     `# misc      ` cronie zathura zathura-ps zathura-djvu \
     `# net       ` net-tools wget tcpdump tcpreplay traceroute \
-    `# terminal  ` lf newsboat zsh \
+    `# terminal  ` newsboat zsh \
     `# workflow  ` dmenu \
     `# x         ` xorg-server xorg-xinit xorg-xset xorg-xrandr xf86-input-libinput xf86-video-intel
 
@@ -49,11 +49,13 @@ mkdir -p ~/.local && cd ~/.local
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 
-# Brave
-cd /tmp
-git clone https://aur.archlinux.org/brave.git
-cd brave
-makepkg -si
+# AUR
+for program in "brave" "lf" do
+	cd /tmp
+	git clone "https://aur.archlinux.org/$program.git"
+	cd "$program"
+	makepkg -si
+done
 
 # Suckless
 for program in "st" "dwm" "dwmblocks" do

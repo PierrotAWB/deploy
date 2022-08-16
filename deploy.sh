@@ -35,17 +35,15 @@ chsh -s $(which zsh)
 
 # Configuration
 cd /tmp
-[ -d dotfiles ] && rm -rf dotfiles
+rm -rf dotfiles config
 git clone https://github.com/PierrotAWB/dotfiles.git
-[ -d ~/.config ] && rm -rf ~/.config
 for dir in ".config" ".xinitrc" ".zshenv" do
 	mv "dotfiles/$dir" "~/$dir"
 done
 
 # Scripts
 mkdir -p ~/.local && cd ~/.local
-[ -d scripts ] && rm -rf scripts
-[ -d bin ] && rm -rf bin
+rm -rf scripts bin
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 

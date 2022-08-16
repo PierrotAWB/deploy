@@ -1,71 +1,73 @@
 #!/bin/bash
 
+###
+#
 # Requires minimal installation and working network.
 # To retrieve this file, it's best to clone:
 #      git@github.com:PierrotAWB/deploy.git
-# (so it is assumed that git is already installed on the machine).
+# (so it is assumed that git, and internet utilities are
+# already installed on the machine).
+#
+# The following are not installed / configured:
+#   - Neomutt
+#   - files
+#   - LUKS
+#
+###
 
 set -x
 
-##### Dependencies
-sudo pacman -Syu zsh xorg-server xorg-xinit xorg-xset
+# Basic Packages
+sudo pacman -Syu \
+    `# archive   ` p7zip zip unzip unrar \
+    `# audio     ` ncmpcpp mpd pulseaudio pulseaudio-alsa pavucontrol alsa-plugins alsa-utils \
+    `# bluetooth ` bluez bluez-utils pulseaudio-bluetooth \
+    `# code      ` nvim python python-pip go rust \
+    `# desktop   ` slock \
+    `# fonts     ` adobe-source-code-pro-fonts noto-fonts ttf-fira-code ttf-joypixels \
+    `# misc      ` cronie zathura zathura-ps zathura-djvu \
+    `# net       ` net-tools wget tcpdump tcpreplay traceroute \
+    `# terminal  ` lf newsboat zsh \
+    `# workflow  ` dmenu \
+    `# x         ` xorg-server xorg-xinit xorg-xset xorg-xrandr xf86-input-libinput xf86-video-intel
 
-
-##### Shell
 chsh -s $(which zsh)
 
-
-##### Configuration files
+# Configuration
 cd /tmp
 [ -d dotfiles ] && rm -rf dotfiles
-git clone https://github.com/PierrotAWB/dotfiles.git 
+git clone https://github.com/PierrotAWB/dotfiles.git
 [ -d ~/.config ] && rm -rf ~/.config
-mv dotfiles/.config ~/.config
-mv dotfiles/.xinitrc ~/.xinitrc
-mv dotfiles/.zshenv ~/.zshenv
-cd
+for dir in ".config" ".xinitrc" ".zshenv" do
+	mv "dotfiles/$dir" "~/$dir"
+done
 
-
-##### Scripts
-mkdir -p ~/.local
-cd ~/.local
+# Scripts
+mkdir -p ~/.local && cd ~/.local
 [ -d scripts ] && rm -rf scripts
 [ -d bin ] && rm -rf bin
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 
-
-##### Programs
-sudo pacman -Syu ranger newsboat ncmpcpp mpd
-
+# Brave
 cd /tmp
 git clone https://aur.archlinux.org/brave.git
 cd brave
 makepkg -si
 
-cd ~/.local/bin
-./build-vim
-
 # Suckless
-cd ~/.config
-git clone https://github.com/PierrotAWB/st.git
-git clone https://github.com/PierrotAWB/dwm.git
-git clone https://github.com/PierrotAWB/dwmblocks.git
-cd st && sudo make install 
-cd ../dwm && sudo make install
-cd ../dwmblocks && sudo make install
-cd
+for program in "st" "dwm" "dwmblocks" do
+	cd ~/.config
+	git clone "https://github.com/PierrotAWB/$program.git"
+	cd "$program"
+	sudo make install
+done
 
-
-##### Misc.
- 
-# cron
-sudo pacman -Syu cronie
+# Misc. clean up
 systemctl start cronie.service
 systemctl enable cronie.service
 
 # Fonts
-sudo pacman -Syu ttf-fira-code ttf-joypixels
 sudo touch /etc/fonts/local.conf
 sudo echo "<?xml version=\"1.0\"?>
 <!DOCTYPE fontconfig SYSTEM \"urn:fontconfig:fonts.dtd\">
@@ -75,9 +77,9 @@ sudo echo "<?xml version=\"1.0\"?>
 		<prefer>
 			<family>Fira Code</family>
 		</prefer>
-	</alias>	
+	</alias>
 		<prefer>
 			<family>Inter</family>
 		</prefer>
-	</alias>	
+	</alias>
 </fontconfig>" > /etc/fonts/local.conf

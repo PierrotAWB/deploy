@@ -50,6 +50,9 @@ rm -rf scripts bin
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 
+sed "/^append_path '\/usr\/bin'$/a\
+	append_path $HOME/.local/bin" /etc/profile
+
 # AUR
 for program in "brave-bin" "lf" "libxft-bgra"
 do

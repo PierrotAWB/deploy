@@ -22,10 +22,10 @@ sudo pacman -Syu \
     `# archive   ` p7zip zip unzip unrar \
     `# audio     ` ncmpcpp mpd pulseaudio pulseaudio-alsa pavucontrol alsa-plugins alsa-utils mediainfo pamixer \
     `# bluetooth ` bluez bluez-utils pulseaudio-bluetooth \
-    `# code      ` neovim python python-pip go rust nodejs npm \
+    `# code      ` neovim python python-pip go rustup nodejs npm \
     `# desktop   ` slock feh \
     `# fonts     ` adobe-source-code-pro-fonts noto-fonts ttf-fira-code ttf-joypixels inter-font ttf-font-awesome \
-    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light \
+    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light dictd \
     `# net       ` openssh net-tools wget tcpdump tcpreplay traceroute \
     `# pictures  ` maim ueberzug sxiv \
     `# terminal  ` newsboat zsh fzf ripgrep bat \
@@ -54,7 +54,7 @@ sed "/^append_path '\/usr\/bin'$/a\
 	append_path $HOME/.local/bin" /etc/profile
 
 # AUR
-for program in "brave-bin" "lf" "libxft-bgra"
+for program in "brave-bin" "lf" "libxft-bgra" "dict-gcide"
 do
 	cd /tmp || exit
 	git clone "https://aur.archlinux.org/$program.git"

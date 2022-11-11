@@ -95,6 +95,7 @@ echo "<?xml version=\"1.0\"?>
 		</prefer>
 	</alias>
 	<alias>
+		<family>san serif</family>
 		<prefer>
 			<family>Inter</family>
 		</prefer>

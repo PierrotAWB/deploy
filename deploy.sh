@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ###
+# Do not run with sudo!
 #
 # Requires minimal installation and working network.
 # To retrieve this file, it's best to clone:
@@ -26,7 +27,7 @@ sudo pacman -Syu \
     `# desktop   ` slock feh \
     `# fonts     ` adobe-source-code-pro-fonts noto-fonts ttf-fira-code ttf-joypixels inter-font ttf-font-awesome \
     `# language  ` fcitx5 \
-    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light dictd unclutter dunst \
+    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light dictd unclutter dunst libinput \
     `# net       ` openssh net-tools wget tcpdump tcpreplay traceroute \
     `# pictures  ` maim ueberzug sxiv \
     `# terminal  ` newsboat zsh fzf ripgrep bat \
@@ -51,11 +52,11 @@ rm -rf scripts bin
 git clone https://github.com/PierrotAWB/scripts.git
 mv scripts bin
 
-sed "/^append_path '\/usr\/bin'$/a\
+sudo sed -i "/^append_path '\/usr\/bin'$/a\
 	append_path $HOME/.local/bin" /etc/profile
 
-# AUR
-for program in "brave-bin" "lf" "libxft-bgra" "dict-gcide" "vidir"
+AUR
+for program in "brave-bin" "lf-bin" "libxft-bgra" "dict-gcide" "vidir"
 do
 	cd /tmp || exit
 	git clone "https://aur.archlinux.org/$program.git"

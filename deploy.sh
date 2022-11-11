@@ -25,7 +25,8 @@ sudo pacman -Syu \
     `# code      ` neovim python python-pip go rustup nodejs npm \
     `# desktop   ` slock feh \
     `# fonts     ` adobe-source-code-pro-fonts noto-fonts ttf-fira-code ttf-joypixels inter-font ttf-font-awesome \
-    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light dictd \
+    `# language  ` fcitx5 \
+    `# misc      ` cronie xclip zathura zathura-ps zathura-djvu zathura-pdf-poppler xbindkeys bc light dictd unclutter dunst \
     `# net       ` openssh net-tools wget tcpdump tcpreplay traceroute \
     `# pictures  ` maim ueberzug sxiv \
     `# terminal  ` newsboat zsh fzf ripgrep bat \
@@ -54,7 +55,7 @@ sed "/^append_path '\/usr\/bin'$/a\
 	append_path $HOME/.local/bin" /etc/profile
 
 # AUR
-for program in "brave-bin" "lf" "libxft-bgra" "dict-gcide"
+for program in "brave-bin" "lf" "libxft-bgra" "dict-gcide" "vidir"
 do
 	cd /tmp || exit
 	git clone "https://aur.archlinux.org/$program.git"
@@ -79,8 +80,7 @@ nvim --headless +PlugInstall +qa
 # Misc. clean up
 for service in "cronie" "bluetooth"
 do
-	systemctl enable "service"
-	systemctl start "service"
+	systemctl enable --now "service"
 done
 
 # Fonts
